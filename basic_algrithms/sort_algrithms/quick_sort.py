@@ -21,15 +21,16 @@ def partition(arr, l, r):
         else:
             l += 1
 
-    arr[more], arr[r] = arr[r], arr[more]
+    arr[more], arr[r] = arr[r], arr[more]  # 这一步要把他换回来
     return less, more
 
 
 def random_quick_sort_detail(arr, l, r):
     if l < r:
-        random_index = l + int(random.random() * (r - l + 1))
+        # random_index = l + int(random.random() * (r - l + 1))
+        random_index = randint(l,r)
         arr[random_index], arr[r] = arr[r], arr[random_index]
-        pos = partition(arr, l, r)
+        pos = partition(arr, l, r)  # 返回的是 less 和 more 
         random_quick_sort_detail(arr, l, pos[0])
         random_quick_sort_detail(arr, pos[1]+1, r)
 
@@ -64,3 +65,31 @@ if __name__ == '__main__':
         print('Failed ')
     else:
         print('Success')
+
+
+# 原作者这个快排序写得不太好
+
+# 修改一种我熟悉的
+
+def quickSort(alist,l,r):
+    if l > r:
+        return  
+    p = partition(alist, l, r) 
+    quickSort(alist,l,p-1)
+    quickSort(alist,p+1,r)
+    return alist
+
+def partition(alist,l,r):
+    pos = randint(l,r)
+    alist[pos], alist[l] = alist[l], alist[pos]
+    v = alist[l]
+    j = l
+    i = l + 1
+    while i <= r:
+        if alist[i] <= v:
+            alist[j+1], alist[i] = alist[i],alist[j+1]
+            j += 1
+        i += 1
+
+    alist[l], alist[j] = alist[j], alist[l]
+    return j
